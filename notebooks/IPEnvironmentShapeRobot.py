@@ -110,6 +110,11 @@ class CollisionCheckerShapeRobot(CollisionChecker):
            but for now this is kept for compatibility reasons. Dominating limits are the ones of the robot in any case."""
         return self.robot.getLimits()
 
+    def penetrationDepth(self, pos):
+        """The penetration depth of CollisionChecker is only valid for a point robot.
+        For a robot with an extent it is not implemented yet (see exercise in IP-11-0-BB-Method)."""
+        raise NotImplementedError("penetrationDepth is not implemented for CollisionCheckerShapeRobot")
+
     @IPPerfMonitor
     def pointInCollision(self, pos):
         """Check whether the robot placed at the given position collides with the scene."""

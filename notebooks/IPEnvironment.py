@@ -8,11 +8,16 @@ License is based on Creative Commons: Attribution-NonCommercial 4.0 Internationa
 
 from IPPerfMonitor import IPPerfMonitor
 
-from shapely.geometry import Point, Polygon, LineString
+from shapely.geometry import Point, Polygon, LineString, box
+from shapely.ops import unary_union
 from shapely import plotting
 
 # color of the obstacles in all notebooks (start: green, goal: red)
 OBSTACLE_COLOR = "#52514e"
+
+# penetration depth of a configuration on the border of an obstacle: it is in collision, but its distance to the
+# free space is 0
+MIN_PENETRATION_DEPTH = 1e-9
 
 class CollisionChecker(object):
 
@@ -20,6 +25,8 @@ class CollisionChecker(object):
         self.scene = scene
         self.limits = [[0.0, 22.0], [0.0, 22.0]] if limits is None else limits
         self.statistic = statistic
+        self._freeSpace = None
+        self._freeSpaceKey = None
 
     def getDim(self):
         """Return dimension of Environment (Shapely should currently always be 2)."""
@@ -76,6 +83,31 @@ class CollisionChecker(object):
             if value.intersects(line):
                 return True
         return False
+
+    def getFreeSpace(self):
+        """Return the free space as Shapely geometry: the area inside the limits minus all obstacles.
+        Overlapping obstacles are merged into one. The result is cached until the scene or the limits change.
+        """
+        key = (tuple(map(id, self.scene.values())), tuple(map(tuple, self.limits)))
+        if key != self._freeSpaceKey:
+            area = box(self.limits[0][0], self.limits[1][0], self.limits[0][1], self.limits[1][1])
+            self._freeSpace = area.difference(unary_union(list(self.scene.values())))
+            self._freeSpaceKey = key
+        return self._freeSpace
+
+    @IPPerfMonitor
+    def penetrationDepth(self, pos):
+        """Return the (virtual) penetration depth of a configuration, e.g. for the BB-Method.
+        Free -> 0.0
+        In collision or outside limits -> distance to the free space, i.e. how far the configuration
+        has to be moved at least to become free.
+        Valid for a point robot (C-space = work space); collision checkers for robots with an extent
+        have to override it (see KinChainCollisionChecker).
+        """
+        assert (len(pos) == self.getDim())
+        if not self.pointInCollision(pos):
+            return 0.0
+        return max(self.getFreeSpace().distance(Point(pos[0], pos[1])), MIN_PENETRATION_DEPTH)
 
     def drawObstacles(self, ax):
         for key, value in self.scene.items():
