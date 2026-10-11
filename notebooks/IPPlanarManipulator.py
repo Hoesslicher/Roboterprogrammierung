@@ -46,18 +46,17 @@ class PlanarRobot:
         all_syms = []
         for joint in self.joints:
             all_syms += [joint.sym_a, joint.sym_theta]
-        self._fk_fns = [
-            sp.lambdify(all_syms, M * sp.Matrix([0, 0, 1]), 'numpy')
-            for M in self.Ms
-        ]
+        # one function for all joint positions; cse: common subexpressions are evaluated only once
+        # (the expressions grow quickly with the number of joints)
+        self._fk_fn = sp.lambdify(all_syms, [M * sp.Matrix([0, 0, 1]) for M in self.Ms], 'numpy', cse=True)
 
     def get_transforms(self):
         args = []
         for joint in self.joints:
             args += [joint.a, joint.theta]
         return [
-            np.array(fn(*args)).squeeze().astype(np.float32)[:2]
-            for fn in self._fk_fns
+            np.array(position).squeeze().astype(np.float32)[:2]
+            for position in self._fk_fn(*args)
         ]
 
     def move(self, new_thetas):
