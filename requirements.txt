@@ -11,3 +11,9 @@ ipywidgets
 jupyter
 ipykernel
 sympy
+
+# Further packages for the notebooks
+ipython
+notebook
+jupyterlab_widgets
+ipympl
