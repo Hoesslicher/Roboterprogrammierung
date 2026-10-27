@@ -24,10 +24,11 @@ class IPPerfMonitor(object):
         IPPerfMonitor.__instances[f] = self
 
     def __call__(self, *args, **kwargs):
-        
-        starttime = time.time()
+
+        # perf_counter: clock with the highest resolution for durations (time.time() may jump)
+        starttime = time.perf_counter()
         ret = self.__f(*args, **kwargs)
-        endtime = time.time()
+        endtime = time.perf_counter()
         element = {'args': args, 'kwargs': kwargs, "retVal": ret, "time": endtime-starttime}
         self.data.append(element)
         
@@ -43,7 +44,7 @@ class IPPerfMonitor(object):
 
     @staticmethod
     def dataFrame():
-        "Return a dict of {function: # of calls} for all registered functions."
+        "Return a pandas DataFrame with one row per recorded call (column 'name': name of the function) of all registered functions."
         result = []
         for f in IPPerfMonitor.__instances:
             
