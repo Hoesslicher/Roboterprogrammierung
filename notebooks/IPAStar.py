@@ -179,9 +179,30 @@ class AStar(PlanerBase):
                             continue
                         except:
                             pass
-
                         self._addGraphNode(newPos,nodeName)
+        return result
 
+    @IPPerfMonitor
+    def _handleNode8(self, nodeName):
+        """Generates all 8 possible successor positions in 2D (straight + diagonal)"""
+        result = []
+        node = self.graph.nodes[nodeName]
+        for dx in [-1, 0, 1]:
+            for dy in [-1, 0, 1]:
+                if dx == 0 and dy == 0:
+                    continue
+                newPos = copy.copy(node["pos"])
+                newPos[0] += dx
+                newPos[1] += dy
+                if not self._inLimits(newPos):
+                    continue
+                try:
+                    # Do not do reopening! If node already in graph do not add it...
+                    self.graph.nodes[self._getNodeID(newPos)]
+                    continue
+                except:
+                    pass
+                self._addGraphNode(newPos, nodeName)
         return result
 
 
