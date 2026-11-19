@@ -1,5 +1,9 @@
 /notebooks/.ipynb_checkpoints/**
 *.pyc
+__pycache__/
+.venv/
+venv/
 .DS_Store
+Thumbs.db
 .vscode/
 /notebooks/basicprmstats

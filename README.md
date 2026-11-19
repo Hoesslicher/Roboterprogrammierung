@@ -51,14 +51,14 @@ In diesem Projekt geht es um **Roboter-Pfadplanung (Path Planning)** in Python m
 | :--- | :--- | :--- |
 | **01 – Einführung** | `IP-1-0-Introduction.ipynb` | Übersicht, Ressourcen und benötigte Python-Bibliotheken |
 | **02 – Grundlagen** | `IP-2-0-Pathplanning-Introduction.ipynb` | Einführung in die Konzepte der Pfadplanung und des Konfigurationsraums |
-| **03 – Graphen (NetworkX)** | `IP-3-0-Introduction-to-NetworkX.ipynb`<br>`IP-3-1-Exercises-with-NetworkX_empty.ipynb` | Arbeiten mit Graphen in Python (`networkx`) inkl. praktischer Übungsaufgaben |
+| **03 – Graphen (NetworkX)** | `IP-3-0-Introduction-to-NetworkX.ipynb`<br>`IP-3-1-Exercises-with-NetworkX.ipynb` | Arbeiten mit Graphen in Python (`networkx`) inkl. praktischer Übungsaufgaben |
 | **04 – Testumgebungen** | `IP-4-0-Test-Environments.ipynb` | Definition von Hindernissen, Arbeitsräumen und Kollisionstests (`shapely`) |
 | **05 – PRM (Probabilistic Roadmaps)** | `IP-5-0-PRM_Basics.ipynb`<br>`IP-5-1-PRM-Basics-class.ipynb`<br>`IP-5-2-PRM-KClosest.ipynb` | Grundprinzip von PRM, objektorientierte Implementierung und Nachbarschaftssuche (*k-Closest*) |
 | **06 – Visibility PRM** | `IP-6-0-PRM-Visibility.ipynb` | Kompaktere Roadmaps durch Sichtbarkeits-Kriterien (Guards & Connectors) |
-| **07 – Lazy PRM** | `IP-7-0-PRM-Lazy.ipynb` | Verzögerte Kollisionsprüfung zur Beschleunigung der Planung |
-| **08 – A\*-Algorithmus** | `IP-8-0_ASTAR.ipynb` | Optimale Pfadsuche auf Graphen und Gitternetzen mittels Heuristiken |
+| **07 – Lazy PRM & Lab Maze** | `IP-7-0-PRM-Lazy.ipynb`<br>`IP-7-1-Lab-Maze_empty.ipynb`<br>`IP-7-1-Lab-Maze_solution.ipynb`<br>`IP-7-1_Notizen.md` | Verzögerte Kollisionsprüfung (Lazy PRM) sowie Labor zu Maze-Benchmarks, DiscCollisionChecker, `LazierPRM` und Bug-Planer |
+| **08 – A\*-Algorithmus** | `IP-8-0_ASTAR.ipynb` | Optimale Pfadsuche auf Gitternetzen mittels Heuristiken, Reopening und C-Space-Diskretisierung |
 | **09 – RRT (Rapidly-exploring Random Trees)** | `IP-9-0-RRT-Basics.ipynb` | Baum-basierte Zufallsplanung für schnelle Exploration im Raum |
-| **10 – Kinematik & Roboterformen** | `IP-10-0-PlanarManipulator.ipynb`<br>`IP-10-1-PlanarManipulatorTests.ipynb`<br>`IP-10-2-ShapeRobot.ipynb` | Planung für mehrgliedrige Roboterarme (Planar Manipulator) und ausgedehnte 2D-Roboterformen |
+| **10 – Kinematik & Roboterformen** | `IP-10-0-PlanarManipulator.ipynb`<br>`IP-10-1-PlanarManipulatorTests.ipynb`<br>`IP-10-2-ShapeRobot.ipynb`<br>`IP-10-3-RRT-Robot-Arm-Clutter.ipynb` | Planung für mehrgliedrige Roboterarme (Planar Manipulator), ausgedehnte 2D-Roboterformen und RRT im Clutter |
 | **11 – Bridge-Builder (BB)** | `IP-11-0-BB-Method.ipynb` | Spezielle Sampling-Strategie für enge Passagen (Narrow Passages) |
 | **X – Benchmarking & Tests** | `IP-X-0-Benchmarking-concept.ipynb`<br>`IP-X-1-Automated_PlanerTest.ipynb` | Automatisierte Auswertung, Laufzeit- und Erfolgsvergleiche der verschiedenen Planer |
 
